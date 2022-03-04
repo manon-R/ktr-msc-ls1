@@ -16,3 +16,6 @@ You can use this business card manager program just by executing the following c
 
 python3 main.py
 
+***
+### Author
+Randrianirina Manon
