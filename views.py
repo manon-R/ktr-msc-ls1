@@ -33,7 +33,7 @@ class Views:
 
 
     def userMenu(self):
-        print(f"\n\n ~ {self.current_user['name']} Workspace ~ ")
+        print(f"\n ~ {self.current_user['name']} Workspace ~ ")
         choice = input("\n****************** Home ******************\n\n\
                 1 => Add Business Card\n\n\
                 2 => My library\n\n\
@@ -54,7 +54,7 @@ class Views:
             self.displayLibrary()
 
         else:
-            print(f"See you soon, {self.current_user['name']}!")
+            print(f"\nSee you soon, {self.current_user['name']}!")
             self.mainMenu()
         
     def loginForm(self):
@@ -73,7 +73,6 @@ class Views:
             self.loginForm()
         
 
-        
     def validPassword(self,ps1, ps2):
         result = False
         if ps1 == ps2:
@@ -86,6 +85,7 @@ class Views:
         else:
             print("\nInvalid Confirmation")
         return result
+
 
     def createUserForm(self):
         name = input("\n\n****************** Create your profile ******************\n\n\
@@ -109,6 +109,7 @@ class Views:
         self.current_user = self.controller.createUser(name, password1, company, email, phone_number)
         self.userMenu()
         
+
     def businessCardForm(self):
         email = input("\n\n****************** Create a new Business Card ******************\n\n\
                 Email address => ")
@@ -123,6 +124,7 @@ class Views:
         self.controller.createBusinessCard(self.current_user, email, name, company, phone_number)
         self.userMenu()
 
+
     def displayLibrary(self):
         if self.current_user["library"]:
             print("\n\n****************** Your Library ******************\n")
@@ -133,13 +135,15 @@ class Views:
         
         self.userMenu()
     
+
     def displayCard(self, card):
         header = f"*********** Company => {card.get('company','')} ***********"
         print(header)
-        print(f" Name  => {card.get('name', '')}            ")
-        print(f" Email => {card.get('email')}           ") 
+        print(f" Name  => {card.get('name', '')}")
+        print(f" Email => {card.get('email')}") 
         print(f" Phone Number => {card.get('phoneNumber','')}")
         print(len(header)* "*")
+
 
     def checkJsonFile(self):
         try:
@@ -149,10 +153,3 @@ class Views:
         except json.decoder.JSONDecodeError:
             with open("datas.json", "w") as datafile:
                 json.dump({}, datafile) 
-
-
-
-
-views = Views()
-
-views.mainMenu()

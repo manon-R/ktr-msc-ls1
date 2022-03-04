@@ -2,6 +2,8 @@ from models import *
 import json
 import hashlib
 
+
+
 class Controllers():
 
     def hashPassword(self, password:str):
@@ -26,6 +28,7 @@ class Controllers():
         
         return new_user.serializedUser()
 
+
     def loginUser(self, name, password):
         
         with open("datas.json") as fp:
@@ -36,7 +39,6 @@ class Controllers():
             result = ""
         return result
 
-            
 
     def createBusinessCard(self, currentUser,email, name, company, phoneNumber): #Current user
         new_card = BusinessCard(email,name, company, phoneNumber)
@@ -52,8 +54,4 @@ class Controllers():
         with open("datas.json", "w") as datafile:
             json.dump(listdata, datafile)
             
-
-
-        print(f"New card successfully created and added to your library !")
-
-
+        print("New card successfully created and added to your library !")
