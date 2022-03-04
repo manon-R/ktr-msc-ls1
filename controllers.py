@@ -26,6 +26,17 @@ class Controllers():
         
         return new_user.serializedUser()
 
+    def loginUser(self, name, password):
+        
+        with open("datas.json") as fp:
+            listdata = json.load(fp)
+        if listdata[name]["password"] == self.hashPassword(password): 
+            result = listdata[name]
+        else:
+            result = ""
+        return result
+
+            
 
     def createBusinessCard(self, currentUser,email, name, company, phoneNumber): #Current user
         new_card = BusinessCard(email,name, company, phoneNumber)

@@ -54,7 +54,7 @@ class Views:
             self.displayLibrary()
 
         else:
-            print(f"Bye bye {self.current_user['name']}!")
+            print(f"See you soon, {self.current_user['name']}!")
             self.mainMenu()
         
     def loginForm(self):
@@ -62,12 +62,12 @@ class Views:
                 Name => ")
         password = input("\n\
                 Password => ")
-        with open("datas.json") as fp:
-            listdata = json.load(fp)
-        if listdata[name]["password"] == self.controller.hashPassword(password): #Or in controllers ?
-            self.current_user = listdata[name]
+
+        if self.controller.loginUser(name,password):
+            self.current_user = self.controller.loginUser(name,password)
             print(f"\n\nWelcome {self.current_user['name']} ! ")
             self.userMenu()
+
         else:
             print("\nInvalid Name or Password")
             self.loginForm()
@@ -127,12 +127,19 @@ class Views:
         if self.current_user["library"]:
             print("\n\n****************** Your Library ******************\n")
             for card in self.current_user["library"]:
-                print(f"{card}\n")
+                print(f"{self.displayCard(card)}\n")
         else:
             print("\n\nYour Library is empty... Let's go for looking for new working partners !")
         
         self.userMenu()
-        
+    
+    def displayCard(self, card):
+        header = f"*********** Company => {card.get('company','')} ***********"
+        print(header)
+        print(f" Name  => {card.get('name', '')}            ")
+        print(f" Email => {card.get('email')}           ") 
+        print(f" Phone Number => {card.get('phoneNumber','')}")
+        print(len(header)* "*")
 
     def checkJsonFile(self):
         try:
@@ -142,9 +149,6 @@ class Views:
         except json.decoder.JSONDecodeError:
             with open("datas.json", "w") as datafile:
                 json.dump({}, datafile) 
-
-
-
 
 
 
