@@ -11,10 +11,15 @@ class Controllers():
     def createUser(self,name, password, companyName, email, phoneNumber):
         new_password = self.hashPassword(password)
         new_user = User(name, new_password, companyName, email, phoneNumber)
-        json_user = json.dumps(new_user.serializedUser())
+        
 
+        with open("datas.json") as fp:
+            listdata = json.load(fp)
+
+        listdata[name] = new_user.serializedUser()
+ 
         with open("datas.json", "w") as datafile:
-            datafile.write(json_user)
+            json.dump(listdata, datafile, separators=(",",":"))
 
         print(f"User {name} successfully created !") #or return ?
 
@@ -23,13 +28,19 @@ class Controllers():
 
     def createBusinessCard(self,user:User ,email, name, company, phoneNumber): #Current user
         new_card = BusinessCard(email,name, company, phoneNumber)
-        json_card = json.dumps(new_card.serializedBusinessCard())
 
         user.library.append(new_card)
-        json_user = user.serializedUser()
+        
+        with open("datas.json") as fp:
+            listdata = json.load(fp)
+
+        listdata[name] = user.serializedUser()
+        listdata[email] = new_card.serializedBusinessCard()
+
         with open("datas.json", "w") as datafile:
-            datafile.write(json_card)
-            datafile.write(json_user)
+            json.dump(listdata, datafile, separators=(",",":"))
+            
+
 
         print(f"New card successfully created and added to your library !")
 
