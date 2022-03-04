@@ -16,29 +16,30 @@ class Controllers():
         with open("datas.json") as fp:
             listdata = json.load(fp)
 
+        
         listdata[name] = new_user.serializedUser()
  
         with open("datas.json", "w") as datafile:
-            json.dump(listdata, datafile, separators=(",",":"))
+            json.dump(listdata, datafile) 
 
         print(f"User {name} successfully created !") #or return ?
+        
+        return new_user.serializedUser()
 
-    def loginUser(self):
-        pass
 
-    def createBusinessCard(self,user:User ,email, name, company, phoneNumber): #Current user
+    def createBusinessCard(self, currentUser,email, name, company, phoneNumber): #Current user
         new_card = BusinessCard(email,name, company, phoneNumber)
 
-        user.library.append(new_card)
+        currentUser["library"].append(new_card.serializedBusinessCard())
         
         with open("datas.json") as fp:
             listdata = json.load(fp)
 
-        listdata[name] = user.serializedUser()
+        listdata[currentUser["name"]] = currentUser
         listdata[email] = new_card.serializedBusinessCard()
 
         with open("datas.json", "w") as datafile:
-            json.dump(listdata, datafile, separators=(",",":"))
+            json.dump(listdata, datafile)
             
 
 
